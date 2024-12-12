@@ -1,9 +1,11 @@
-﻿using ConsoleRpgEntities.Models.Abilities.PlayerAbilities;
+using ConsoleRpgEntities.Models.Abilities.PlayerAbilities;
 using ConsoleRpgEntities.Models.Characters;
 using ConsoleRpgEntities.Models.Characters.Monsters;
 using ConsoleRpgEntities.Models.Equipments;
 using ConsoleRpgEntities.Models.Rooms;
 using Microsoft.EntityFrameworkCore;
+using System.Text.RegularExpressions;
+using System;
 
 namespace ConsoleRpgEntities.Data
 {
@@ -22,13 +24,81 @@ namespace ConsoleRpgEntities.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Configure TPH for Character hierarchy
+            modelBuilder.Entity<Player>()
+                .HasDiscriminator<string>(r => r.Race)
+                .HasValue("Cambion")
+                .HasValue("Changeling")
+                .HasValue("Demon")
+                .HasValue("Draconian")
+                .HasValue("Dwarf")
+                .HasValue("Elf")
+                .HasValue("Fairy")
+                .HasValue("Garuda")
+                .HasValue("Goblin")
+                .HasValue("Golem")
+                .HasValue("Half-Dwarf")
+                .HasValue("Half-Elf")
+                .HasValue("Half-Goblin")
+                .HasValue("Half-Ogre")
+                .HasValue("Half-Troll")
+                .HasValue("Half-Uruk")
+                .HasValue("Hobbit")
+                .HasValue("Human")
+                .HasValue("Kitsune")
+                .HasValue("Lamia")
+                .HasValue("Merman")
+                .HasValue("Minotaur")
+                .HasValue("Naga")
+                .HasValue("Ogre")
+                .HasValue("Orrok")
+                .HasValue("Saurian")
+                .HasValue("Troll")
+                .HasValue("Uruk");
+
+            modelBuilder.Entity<Player>()
+                .HasDiscriminator<string>(c => c.Class)
+                .HasValue<Artificer>("Artificer")
+                .HasValue<Bard>("Bard")
+                .HasValue<Barbarian>("Barbarian")
+                .HasValue<Cleric>("Cleric")
+                .HasValue<Druid>("Druid")
+                .HasValue<Fighter>("Fighter")
+                .HasValue<Monk>("Monk")
+                .HasValue<Paladin>("Paladin")
+                .HasValue<Ranger>("Ranger")
+                .HasValue<Revenant>("Revenant")
+                .HasValue<Rogue>("Rogue")
+                .HasValue<Sorcerer>("Sorcerer")
+                .HasValue<Therianthrope>("Therianthrope")
+                .HasValue<Vampire>("Vampire")
+                .HasValue<Warlock>("Warlock")
+                .HasValue<Wizard>("Wizard");
+
             modelBuilder.Entity<Monster>()
-                .HasDiscriminator<string>(m=> m.MonsterType)
-                .HasValue<Goblin>("Goblin");
+                .HasDiscriminator<string>(m => m.Race)
+                .HasValue<Balrog>("Balrog")
+                .HasValue<Fallen>("Fallen")
+                .HasValue<Ghoul>("Ghoul")
+                .HasValue<Goblin>("Goblin")
+                .HasValue<Kumiho>("Kumiho")
+                .HasValue<Ogre>("Ogre")
+                .HasValue<Oni>("Oni")
+                .HasValue<Orrok>("Orrok")
+                .HasValue<Rakshasa>("Rakshasa")
+                .HasValue<Troll>("Troll")
+                .HasValue<Uruk>("Uruk");
 
             // Configure TPH for Ability hierarchy
             modelBuilder.Entity<Ability>()
-                .HasDiscriminator<string>(pa=>pa.AbilityType)
+                .HasDiscriminator<string>(pa => pa.AbilityType)
+                .HasValue<BiteAbility>("BiteAbility")
+                .HasValue<BubbleAbility>("BubbleAbility")
+                .HasValue<DrainAbility>("DrainAbility")
+                .HasValue<FireAbility>("FireAbility")
+                .HasValue<HealAbility>("HealAbility")
+                .HasValue<LightningAbility>("LightningAbility")
+                .HasValue<MistAbility>("MistAbility")
+                .HasValue<RageAbility>("RageAbility")
                 .HasValue<ShoveAbility>("ShoveAbility");
 
             // Configure many-to-many relationship
@@ -78,5 +148,3 @@ namespace ConsoleRpgEntities.Data
         }
     }
 }
-
-
