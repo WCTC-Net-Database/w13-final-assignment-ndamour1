@@ -86,6 +86,11 @@
 
 #### Most of all.. Have fun!
 ---
+### Notes for Students:
+- This assignment integrates everything you've learned about Entity Framework Core, LINQ, SOLID principles, and advanced console programming.
+- Use provided .sql files or seed data to prepopulate your database with sample Items and Abilities.
+- Remember to create new migrations for any database changes and use `dotnet ef database update` to apply them.
+---
 Week 13 Assignment: FINAL Assignment
 ====================================
 
@@ -140,7 +145,8 @@ When the game asks for the user to input a name in order to perform a function, 
 #### Game Guide
 The guide acts a means for the user to get information on the various races, classes, and abilities in the game. In addition to sweet, juicy LORE based on various franchises; the guide allows the user to make decisions on creating a character, such as what abilities to approproately their character. For example, a vampire sorcerer would logically possess Drain, Bite, Mist, Bubble, Fire, and Lightning abilities. A vampire is able to drink the blood of mortals to revitalize themselves, use their sharp fangs as weapons, and turn into mist to protect themselves from physical harm and to cross long distances. Meanwhile, sorcerers are able to cast spells that allow them project either fire or lightning and erect magical barriers.
 
-### Notes for Students:
-- This assignment integrates everything you've learned about Entity Framework Core, LINQ, SOLID principles, and advanced console programming.
-- Use provided .sql files or seed data to prepopulate your database with sample Items and Abilities.
-- Remember to create new migrations for any database changes and use `dotnet ef database update` to apply them.
+### Project Goals
+I strived to complete all of the listed requirements for an A+ as I truly did want to do my best for the assignment. Those two screwups on my assignments during the semester's first half really got to me and I wanted to hopefully make up for them here. Plus, I'm already a fan of the RPG concept, do it was a perfect opportunity to do my (technically) second proper attempt at it. Plus it allowed me the opportunity to inject lore into what was otherwise a blank slate thanks to my addition of the GameGuide, which fulfilled the A+ requirement of creating something of my own design.
+
+### Thoughts on the Class
+Overall, this was probably one of my favorite college classes I've every taken. While I did have a rocky start, I was able to catch up and was able to grasp the concepts being taught once I knew what I was doing. It's probably why I liked injecting my own comments and questions at times more often than I usually do, since otherwise I'm pretty much quiet during the entire class unless I had an answer to a question or was called upon for something. So, I think was a really great run and I hope this trend continues in the future with my IT track.
