@@ -1627,6 +1627,7 @@ namespace ConsoleRpg.Services
 
                         if (typeInput > 0 && typeInput < 10)
                         {
+                            _outputManager.AddLogEntry($"You have chosen a {name} ability.");
                             break;
                         }
                     }
