@@ -952,7 +952,7 @@ namespace ConsoleRpg.Services
                                 _outputManager.AddLogEntry($"     Damage: {damage}");
                                 _outputManager.AddLogEntry($"     Defense: {defense}");
                             }
-                            _outputManager.AddLogEntry($"Are you okay with this setup?");
+                            _outputManager.AddLogEntry($"\nAre you okay with this setup?");
                             _outputManager.AddLogEntry($"1. Yes");
                             _outputManager.AddLogEntry($"1. No");
                             var finalizeAbility = _outputManager.GetUserInput("Selection:");
@@ -1043,7 +1043,7 @@ namespace ConsoleRpg.Services
                         _outputManager.AddLogEntry($"     Health: {health}");
                         _outputManager.AddLogEntry($"     Ability: {description}");
                     }
-                    _outputManager.AddLogEntry("Are you okay with this setup?");
+                    _outputManager.AddLogEntry("\nAre you okay with this setup?");
                     _outputManager.AddLogEntry("1. Yes");
                     _outputManager.AddLogEntry("2. No");
                     var finalizeCharacter = _outputManager.GetUserInput("Selection:");
@@ -1859,14 +1859,23 @@ namespace ConsoleRpg.Services
 
                         if (typeInput == 9)
                         {
-                            _outputManager.AddLogEntry($"     Name: {name}\n     Description {description}\n     Ability Type: {abilityType}\n     Damage: {damage}\n     Defense: {defense}\n     Distance: {distance}\n");
+                            _outputManager.AddLogEntry($"     Name: {name}");
+                            _outputManager.AddLogEntry($"     Description {description}");
+                            _outputManager.AddLogEntry($"     Ability Type: {abilityType}");
+                            _outputManager.AddLogEntry($"     Damage: {damage}");
+                            _outputManager.AddLogEntry($"     Defense: {defense}");
+                            _outputManager.AddLogEntry($"     Distance: {distance}");
                         }
                         else
                         {
-                            _outputManager.AddLogEntry($"     Name: {name}\n     Description {description}\n     Ability Type: {abilityType}\n     Damage: {damage}\n     Defense: {defense}\n");
+                            _outputManager.AddLogEntry($"     Name: {name}");
+                            _outputManager.AddLogEntry($"     Description {description}");
+                            _outputManager.AddLogEntry($"     Ability Type: {abilityType}");
+                            _outputManager.AddLogEntry($"     Damage: {damage}");
+                            _outputManager.AddLogEntry($"     Defense: {defense}");
                         }
 
-                        _outputManager.AddLogEntry($"Are you okay with this setup?");
+                        _outputManager.AddLogEntry($"\nAre you okay with this setup?");
                         _outputManager.AddLogEntry($"1. Yes");
                         _outputManager.AddLogEntry($"1. No");
                         var finalizeAbility = _outputManager.GetUserInput("Selection:");
@@ -2649,7 +2658,7 @@ namespace ConsoleRpg.Services
                             _outputManager.AddLogEntry($"     West Room: {west.Name}");
                         }
 
-                        _outputManager.AddLogEntry("Are you okay with this setup?");
+                        _outputManager.AddLogEntry("\nAre you okay with this setup?");
                         _outputManager.AddLogEntry("1. Yes");
                         _outputManager.AddLogEntry("2. No");
                         var finalizeRoom = _outputManager.GetUserInput("Selection:");
