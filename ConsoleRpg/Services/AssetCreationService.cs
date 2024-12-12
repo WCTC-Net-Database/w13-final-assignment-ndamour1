@@ -1953,6 +1953,7 @@ namespace ConsoleRpg.Services
             // Input variables
             // Room
             List<Player> roomPlayers = new List<Player>();
+            List<Monster> roomMonsters = new List<Monster>();
             Room room = new Room();
             string name = null;
             string description = null;
@@ -1966,6 +1967,15 @@ namespace ConsoleRpg.Services
             string addCharacter = null;
 
             // Room creation
+            int randomPlayer = 0;
+            if (players.Count > 1)
+            {
+                randomPlayer = rand.Next(0, players.Count);
+            }
+            int chosenMonster = rand.Next(0, monsters.Count);
+            var randomMonster = monsters.ElementAt(chosenMonster);
+            roomMonsters.Add(randomMonster);
+
             while (true)
             {
                 while (true)
@@ -2484,7 +2494,7 @@ namespace ConsoleRpg.Services
                                             {
                                                 chosenPlayer = sameNamePlayers.ElementAt(iChooseYou - 1);
                                                 roomPlayers.Add(chosenPlayer);
-                                                _outputManager.AddLogEntry($"{playerName} has been added to you room.");
+                                                _outputManager.AddLogEntry($"{playerName} has been added to your room.");
                                                 break;
                                             }
                                             else
@@ -2504,7 +2514,7 @@ namespace ConsoleRpg.Services
                                 {
                                     chosenPlayer = sameNamePlayers.ElementAt(0);
                                     roomPlayers.Add(chosenPlayer);
-                                    _outputManager.AddLogEntry($"{playerName} has been added to you room.");
+                                    _outputManager.AddLogEntry($"{playerName} has been added to your room.");
                                     break;
                                 }
                                 else if (sameNamePlayers.Count == 0)
@@ -2529,6 +2539,11 @@ namespace ConsoleRpg.Services
                                 _outputManager.AddLogEntry("Invalid input.");
                             }
                         }
+                    }
+                    else if (addCharacter == "2")
+                    {
+                        chosenPlayer = players.ElementAt(randomPlayer);
+                        roomPlayers.Add(chosenPlayer);
                     }
 
                     // Results
@@ -2646,15 +2661,8 @@ namespace ConsoleRpg.Services
                                 room.South = south;
                                 room.East = east;
                                 room.West = west;
-                                if (roomPlayers.Count > 0)
-                                {
-                                    room.Players = roomPlayers.ToList();
-                                }
-                                else
-                                {
-                                    room.Players = new List<Player>();
-                                }
-                                room.Monsters = new List<Monster>();
+                                room.Players = roomPlayers.ToList();
+                                room.Monsters = roomMonsters.ToList();
                                 roomComplete = true;
                                 break;
                             case "2":
@@ -2672,17 +2680,21 @@ namespace ConsoleRpg.Services
 
                     if (roomComplete)
                     {
-                        complete = true;
-                        try
+                        _roomRepository.AddRoom(room);
+                        _outputManager.AddLogEntry($"{name} has been created.");
+                        room.Monsters.Remove(randomMonster);
+                        _roomRepository.UpdateRoom(room);
+                        if (addCharacter == "1")
                         {
-                            _roomRepository.AddRoom(room);
-                            _outputManager.AddLogEntry($"{name} has been created.");
+                            chosenPlayer.Room = room;
                             _playerRepository.UpdatePlayer(chosenPlayer);
                         }
-                        catch (DbUpdateException e)
+                        else if (addCharacter == "2")
                         {
-                            _outputManager.AddLogEntry("A problem occured in creating the room.");
+                            room.Players.Remove(chosenPlayer);
+                            _roomRepository.UpdateRoom(room);
                         }
+                        complete = true;
                         break;
                     }
                 }
