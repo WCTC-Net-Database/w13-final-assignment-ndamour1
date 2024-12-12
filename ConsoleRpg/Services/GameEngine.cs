@@ -29,6 +29,7 @@ public class GameEngine
     private readonly PlayerRepository _playerRepository;
     private readonly MonsterRepository _monsterRepository;
     private readonly AbilityRepository _abilityRepository;
+    private readonly ItemRepository _itemRepository;
     private readonly RoomRepository _roomRepository;
     private readonly OutputManager _outputManager;
     private Table _logTable;
@@ -37,7 +38,7 @@ public class GameEngine
     private Player _player;
     private List<Monster> _monsters;
 
-    public GameEngine(GameContext context, GameGuide guide, MenuManager menuManager, MapManager mapManager, AssetCreationService assetCreationService, SearchService searchService, PlayerService playerService, MonsterService monsterService, AbilityService abilityService, PlayerRepository playerRepository, MonsterRepository monsterRepository, AbilityRepository abilityRepository, RoomRepository roomRepository, OutputManager outputManager)
+    public GameEngine(GameContext context, GameGuide guide, MenuManager menuManager, MapManager mapManager, AssetCreationService assetCreationService, SearchService searchService, PlayerService playerService, MonsterService monsterService, AbilityService abilityService, PlayerRepository playerRepository, MonsterRepository monsterRepository, AbilityRepository abilityRepository, ItemRepository itemRepository, RoomRepository roomRepository, OutputManager outputManager)
     {
         _menuManager = menuManager;
         _mapManager = mapManager;
@@ -49,6 +50,7 @@ public class GameEngine
         _playerRepository = playerRepository;
         _monsterRepository = monsterRepository;
         _abilityRepository = abilityRepository;
+        _itemRepository = itemRepository;
         _roomRepository = roomRepository;
         _outputManager = outputManager;
         _context = context;
@@ -294,6 +296,18 @@ public class GameEngine
 
                 if (targetableEnemy.Health > 0)
                 {
+                    foreach (Ability playerAbility in abilities)
+                    {
+                        if (playerAbility.Name.Equals("Heal"))
+                        {
+                            _outputManager.AddLogEntry($"{playerAbility.Description}, Type: {playerAbility.Name}, HP Recovery: {playerAbility.Damage}, Defense: {playerAbility.Defense}");
+                        }
+                        else
+                        {
+                            _outputManager.AddLogEntry($"{playerAbility.Description}, Type: {playerAbility.Name}, Damage: {playerAbility.Damage}, Defense: {playerAbility.Defense}");
+                        }
+                    }
+                    
                     while (true)
                     {
                         try
@@ -381,7 +395,7 @@ public class GameEngine
                 _player.Experience += 10;
                 _player.Health = CalculateHealth(_player);
                 restorePlayerHealth = _player.Health;
-                
+
                 foreach (Item takenItem in items)
                 {
                     foreach (Player player in players)
@@ -414,6 +428,18 @@ public class GameEngine
 
                 if (targetableEnemy.Health > 0)
                 {
+                    foreach (Ability playerAbility in abilities)
+                    {
+                        if (playerAbility.Name.Equals("Heal"))
+                        {
+                            _outputManager.AddLogEntry($"{playerAbility.Description}, Type: {playerAbility.Name}, HP Recovery: {playerAbility.Damage}, Defense: {playerAbility.Defense}");
+                        }
+                        else
+                        {
+                            _outputManager.AddLogEntry($"{playerAbility.Description}, Type: {playerAbility.Name}, Damage: {playerAbility.Damage}, Defense: {playerAbility.Defense}");
+                        }
+                    }
+
                     while (true)
                     {
                         try
@@ -516,6 +542,7 @@ public class GameEngine
                     {
                         int itemId = rand.Next(0, untakenItems.Count);
                         item = untakenItems.ElementAt(itemId);
+                        _itemRepository.UpdateItem(item);
 
                         _outputManager.AddLogEntry($"{_player.Name} looted a {item.Name} from {target.Name}.");
                         _player.Inventory.Items.Add(item);
@@ -565,6 +592,8 @@ public class GameEngine
                         },
                             Player = _player
                         };
+                        _itemRepository.UpdateItem(_player.Equipment.Weapon);
+                        _itemRepository.UpdateItem(_player.Equipment.Armor);
                     }
                     else if (_player.Equipment.Weapon != null && _player.Equipment.Armor == null)
                     {
@@ -576,6 +605,7 @@ public class GameEngine
                             },
                             Player = _player
                         };
+                        _itemRepository.UpdateItem(_player.Equipment.Weapon);
                     }
                     else if (_player.Equipment.Weapon == null && _player.Equipment.Armor != null)
                     {
@@ -587,6 +617,7 @@ public class GameEngine
                             },
                             Player = _player
                         };
+                        _itemRepository.UpdateItem(_player.Equipment.Armor);
                     }
                     else
                     {
@@ -845,7 +876,7 @@ public class GameEngine
                             {
                                 int counterOne = 0;
                                 _outputManager.AddLogEntry($"\n{result.Key}");
-                                var groupByRace = characters.Where(r => r.Race.Equals(result.Key));
+                                var groupByRace = characters.Where(r => r.Race.Equals(result.Key)).OrderBy(n => n.Name);
                                 foreach (var characterByRace in groupByRace)
                                 {
                                     counterOne++;
@@ -875,7 +906,7 @@ public class GameEngine
                             {
                                 int counterTwo = 0;
                                 _outputManager.AddLogEntry($"\n{result.Key}");
-                                var groupByRace = characters.Where(c => c.Class.Equals(result.Key));
+                                var groupByRace = characters.Where(c => c.Class.Equals(result.Key)).OrderBy(n => n.Name);
                                 foreach (var characterByClass in groupByRace)
                                 {
                                     counterTwo++;
@@ -900,10 +931,10 @@ public class GameEngine
                             }
                             break;
                         case 4:
-                            characters = _context.Players.OrderByDescending(e => e.Experience).ToList();
+                            characters = _context.Players.OrderByDescending(e => e.Experience).OrderBy(n => n.Name).ToList();
                             break;
                         case 5:
-                            characters = _context.Players.OrderByDescending(h => h.Health).ToList();
+                            characters = _context.Players.OrderByDescending(h => h.Health).OrderBy(n => n.Name).ToList();
                             break;
                         default:
                             _outputManager.AddLogEntry("Invalid selection. Please choose between 0 and 6.");
@@ -1130,7 +1161,7 @@ public class GameEngine
 
                         if (chosenNumber > 0 && chosenNumber <= characters.Count)
                         {
-                            chosen = _playerRepository.GetPlayerById(chosenNumber);
+                            chosen = characters.ElementAt(chosenNumber - 1);
                             _outputManager.AddLogEntry($"You have chosen {characters.ElementAt(chosenNumber - 1).Name}.");
                             break;
                         }
@@ -1492,6 +1523,7 @@ public class GameEngine
 
                 if (found)
                 {
+                    _outputManager.AddLogEntry($"You have equipped the {input}.");
                     _playerService.EquipItemFromInventory(player, chosen);
                     break;
                 }
