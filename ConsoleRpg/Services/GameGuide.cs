@@ -1,4 +1,4 @@
-﻿using ConsoleRpg.Helpers;
+using ConsoleRpg.Helpers;
 using Spectre.Console;
 using System;
 using System.Collections.Generic;
@@ -190,41 +190,41 @@ namespace ConsoleRpg.Services
                     case "7":
                         MonkChapter();
                         break;
-                    case "9":
+                    case "8":
                         PaladinChapter();
                         break;
-                    case "10":
+                    case "9":
                         RangerChapter();
                         break;
-                    case "11":
+                    case "10":
                         RevenantChapter();
                         break;
-                    case "12":
+                    case "11":
                         RogueChapter();
                         break;
-                    case "13":
+                    case "12":
                         SorcererChapter();
                         break;
-                    case "14":
+                    case "13":
                         TherianthropeChapters();
                         break;
-                    case "15":
+                    case "14":
                         VampireChapter();
                         break;
-                    case "16":
+                    case "15":
                         WarlockChapter();
                         break;
-                    case "17":
+                    case "16":
                         WizardChapter();
                         break;
-                    case "18":
+                    case "17":
                         break;
                     default:
                         _outputManager.AddLogEntry("Invalid selection. Please choose a number between 0 and 19.");
                         break;
                 }
 
-                if (input == "18")
+                if (input == "17")
                 {
                     break;
                 }
@@ -235,7 +235,7 @@ namespace ConsoleRpg.Services
         {
             while (true)
             {
-                _outputManager.AddLogEntry("Angels are the personal servants of the gods, acting on behalf of their progrenitors in order to carry out their will on the mortal plane. Due the varied and wildly differing personalities within the pantheon, the true forms of anegls take on a wide variety of forms that suit the domains of their creator god. However, as shapeshifters, they have become more widely known for taking the form of beautiful humans with bird wings sprouting from their backs and being garbed in robes.");
+                _outputManager.AddLogEntry("Angels are the personal servants of the gods, acting on behalf of their progrenitors in order to carry out their will on the mortal plane. Due the varied and wildly differing personalities within the pantheon, the true forms of angels take on a wide variety of forms that suit the domains of their creator god. However, as shapeshifters, they have become more widely known for taking the form of beautiful humans with bird wings sprouting from their backs and being garbed in robes.");
                 _outputManager.AddLogEntry("Input 1 to exit.");
                 var input = _outputManager.GetUserInput("Done:");
 
