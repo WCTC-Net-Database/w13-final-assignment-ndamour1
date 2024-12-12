@@ -2700,6 +2700,7 @@ namespace ConsoleRpg.Services
                         _outputManager.AddLogEntry($"{name} has been created.");
                         room.Monsters.Remove(randomMonster);
                         _roomRepository.UpdateRoom(room);
+                        
                         if (addCharacter == "1")
                         {
                             chosenPlayer.Room = room;
@@ -2712,6 +2713,13 @@ namespace ConsoleRpg.Services
                             chosenPlayer.Room = oldRoom;
                             _playerRepository.UpdatePlayer(chosenPlayer);
                         }
+
+                        for (int i = 0; i < rooms.Count; ++i)
+                        {
+                            rooms.ElementAt(i).Id = i;
+                            _roomRepository.UpdateRoom(rooms.ElementAt(i));
+                        }
+                        
                         complete = true;
                         break;
                     }
