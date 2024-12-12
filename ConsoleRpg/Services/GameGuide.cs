@@ -136,7 +136,7 @@ namespace ConsoleRpg.Services
                         break;
                 }
 
-                if (input == "18")
+                if (input == "17")
                 {
                     break;
                 }
