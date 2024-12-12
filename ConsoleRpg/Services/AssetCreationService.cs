@@ -554,7 +554,7 @@ namespace ConsoleRpg.Services
                     {
                         try
                         {
-                            _outputManager.AddLogEntry("\nChoose a weapon to equip.");
+                            outputManager.AddLogEntry("\nChoose a piece of armor to equip.");
                             int chosenNumber = Convert.ToInt32(_outputManager.GetUserInput("Selection:"));
 
                             if (chosenNumber > 0 && chosenNumber <= untakenArmorFinal.Count)
