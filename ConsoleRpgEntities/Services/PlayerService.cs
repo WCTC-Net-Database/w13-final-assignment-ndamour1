@@ -8,11 +8,13 @@ using ConsoleRpgEntities.Services;
 public class PlayerService
 {
     private readonly IOutputService _outputService;
+    private readonly EquipmentRepository _equipmentRepository;
     private readonly AbilityService _abilityService;
 
-    public PlayerService(IOutputService outputService, AbilityService abilityService)
+    public PlayerService(IOutputService outputService, EquipmentRepository equipmentRepository, AbilityService abilityService)
     {
         _outputService = outputService;
+        _equipmentRepository = equipmentRepository;
         _abilityService = abilityService;
     }
 
@@ -118,6 +120,8 @@ public class PlayerService
         if (player.Inventory?.Items.Contains(item) == true)
         {
             player.Equipment?.EquipItem(item);
+            _equipmentRepository.UpdateEquipmentList(player.Equipment);
+            _outputService.WriteLine($"You have equipped the {item.Name}.");
         }
         else
         {
