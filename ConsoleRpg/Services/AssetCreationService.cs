@@ -1972,6 +1972,7 @@ namespace ConsoleRpg.Services
             {
                 randomPlayer = rand.Next(0, players.Count);
             }
+            Room oldRoom = new Room();
             int chosenMonster = rand.Next(0, monsters.Count);
             var randomMonster = monsters.ElementAt(chosenMonster);
             roomMonsters.Add(randomMonster);
@@ -2543,6 +2544,7 @@ namespace ConsoleRpg.Services
                     else if (addCharacter == "2")
                     {
                         chosenPlayer = players.ElementAt(randomPlayer);
+                        oldRoom = chosenPlayer.Room;
                         roomPlayers.Add(chosenPlayer);
                     }
 
@@ -2693,6 +2695,8 @@ namespace ConsoleRpg.Services
                         {
                             room.Players.Remove(chosenPlayer);
                             _roomRepository.UpdateRoom(room);
+                            chosenPlayer.Room = oldRoom;
+                            _playerRepository.UpdatePlayer(chosenPlayer);
                         }
                         complete = true;
                         break;
