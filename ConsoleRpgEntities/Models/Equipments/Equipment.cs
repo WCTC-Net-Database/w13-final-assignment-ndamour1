@@ -23,11 +23,16 @@ public class Equipment
         if (item.Type == "Weapon")
         {
             Weapon = item;
+            Console.WriteLine($"You have equipped the {item.Name}.");
         }
         else if (item.Type == "Armor")
         {
             Armor = item;
+            Console.WriteLine($"You have equipped the {item.Name}.");
         }
-        Console.WriteLine($"You have equipped the {item.Name}.");
+        else
+        {
+            Console.WriteLine("You cannot equip this item.");
+        }
     }
 }
