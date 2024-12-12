@@ -9,8 +9,11 @@ namespace ConsoleRpgEntities.Models.Characters
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Race { get; set; }
+        public string Class { get; set; }
         public int Experience { get; set; }
         public int Health { get; set; }
+        public int Modifier { get; set; }
 
         // Foreign key
         public int? EquipmentId { get; set; }
@@ -22,5 +25,4 @@ namespace ConsoleRpgEntities.Models.Characters
         public virtual int? RoomId { get; set; }
         public virtual ICollection<Ability> Abilities { get; set; }
     }
-
 }
