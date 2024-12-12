@@ -67,6 +67,7 @@ public class GameEngine
 
     private void GameLoop(string name)
     {
+        Room startingRoom = _context.Rooms.FirstOrDefault(i => i.Id == _player.RoomId);
         int restorePlayerHealth = _player.Health;
         RestoreMonsterHealth();
 
@@ -127,7 +128,8 @@ public class GameEngine
                 }
 
                 var input = _outputManager.GetUserInput("Choose an action:");
-                Room currentRoom = _context.Rooms.FirstOrDefault(i => i.Id == _player.RoomId);
+                Room currentRoom = _player.Room;
+                Room nextRoom = new Room();
                 int currentRoomId = currentRoom.Id;
                 string? direction = null;
 
@@ -174,7 +176,12 @@ public class GameEngine
                     case "11":
                         _outputManager.AddLogEntry("Exiting game...");
                         _player.Health = restorePlayerHealth;
+                        _player.Room = startingRoom;
+                        nextRoom.Players.Remove(_player);
+                        startingRoom.Players.Add(_player);
                         _playerRepository.UpdatePlayer(_player);
+                        _roomRepository.UpdateRoom(startingRoom);
+                        _roomRepository.UpdateRoom(nextRoom);
                         RestoreMonsterHealth();
                         Environment.Exit(0);
                         break;
@@ -206,6 +213,13 @@ public class GameEngine
                         }
 
                         _playerService.Move(_player, direction);
+                        nextRoom = _context.Rooms.FirstOrDefault(i => i.Id == currentRoomId);
+                        _player.Room = nextRoom;
+                        nextRoom.Players.Add(_player);
+                        startingRoom.Players.Remove(_player);
+                        _playerRepository.UpdatePlayer(_player);
+                        _roomRepository.UpdateRoom(startingRoom);
+                        _roomRepository.UpdateRoom(nextRoom);
                         _mapManager.UpdateCurrentRoom(currentRoomId);
                         _mapManager.DisplayMap();
                     }
