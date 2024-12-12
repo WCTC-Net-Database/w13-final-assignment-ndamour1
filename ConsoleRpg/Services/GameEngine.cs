@@ -1,4 +1,4 @@
-﻿using Castle.Core.Internal;
+using Castle.Core.Internal;
 using ConsoleRpg.Helpers;
 using ConsoleRpgEntities.Data;
 using ConsoleRpgEntities.Models.Abilities.PlayerAbilities;
@@ -29,6 +29,7 @@ public class GameEngine
     private readonly PlayerRepository _playerRepository;
     private readonly MonsterRepository _monsterRepository;
     private readonly AbilityRepository _abilityRepository;
+    private readonly RoomRepository _roomRepository;
     private readonly OutputManager _outputManager;
     private Table _logTable;
     private Panel _mapPanel;
@@ -36,7 +37,7 @@ public class GameEngine
     private Player _player;
     private List<Monster> _monsters;
 
-    public GameEngine(GameContext context, GameGuide guide, MenuManager menuManager, MapManager mapManager, AssetCreationService assetCreationService, SearchService searchService, PlayerService playerService, MonsterService monsterService, AbilityService abilityService, PlayerRepository playerRepository, MonsterRepository monsterRepository, AbilityRepository abilityRepository, OutputManager outputManager)
+    public GameEngine(GameContext context, GameGuide guide, MenuManager menuManager, MapManager mapManager, AssetCreationService assetCreationService, SearchService searchService, PlayerService playerService, MonsterService monsterService, AbilityService abilityService, PlayerRepository playerRepository, MonsterRepository monsterRepository, AbilityRepository abilityRepository, RoomRepository roomRepository, OutputManager outputManager)
     {
         _menuManager = menuManager;
         _mapManager = mapManager;
@@ -48,6 +49,7 @@ public class GameEngine
         _playerRepository = playerRepository;
         _monsterRepository = monsterRepository;
         _abilityRepository = abilityRepository;
+        _roomRepository = roomRepository;
         _outputManager = outputManager;
         _context = context;
         _guide = guide;
@@ -595,6 +597,7 @@ public class GameEngine
                         };
                     }
                     _playerRepository.UpdatePlayer(_player);
+                    _roomRepository.UpdateRoom(_player.Room);
                     _assetCreationService.AbilityCreationLoop(_player);
                     break;
                 case "3":
