@@ -2715,12 +2715,6 @@ namespace ConsoleRpg.Services
                             chosenPlayer.Room = oldRoom;
                             _playerRepository.UpdatePlayer(chosenPlayer);
                         }
-
-                        for (int i = 0; i < rooms.Count; ++i)
-                        {
-                            rooms.ElementAt(i).Id = i;
-                            _roomRepository.UpdateRoom(rooms.ElementAt(i));
-                        }
                         
                         complete = true;
                         break;
