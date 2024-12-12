@@ -2705,6 +2705,8 @@ namespace ConsoleRpg.Services
                         {
                             chosenPlayer.Room = room;
                             _playerRepository.UpdatePlayer(chosenPlayer);
+                            room.PlayerId = chosenPlayer.Id;
+                            _roomRepository.UpdateRoom(room);
                         }
                         else if (addCharacter == "2")
                         {
