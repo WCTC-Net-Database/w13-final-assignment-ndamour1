@@ -954,7 +954,7 @@ namespace ConsoleRpg.Services
                             }
                             _outputManager.AddLogEntry($"\nAre you okay with this setup?");
                             _outputManager.AddLogEntry($"1. Yes");
-                            _outputManager.AddLogEntry($"1. No");
+                            _outputManager.AddLogEntry($"2. No");
                             var finalizeAbility = _outputManager.GetUserInput("Selection:");
 
                             switch (finalizeAbility)
@@ -1883,7 +1883,7 @@ namespace ConsoleRpg.Services
 
                         _outputManager.AddLogEntry($"\nAre you okay with this setup?");
                         _outputManager.AddLogEntry($"1. Yes");
-                        _outputManager.AddLogEntry($"1. No");
+                        _outputManager.AddLogEntry($"2. No");
                         var finalizeAbility = _outputManager.GetUserInput("Selection:");
 
                         switch (finalizeAbility)
