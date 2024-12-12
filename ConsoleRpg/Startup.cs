@@ -53,6 +53,7 @@ public static class Startup
         services.AddSingleton<PlayerRepository>();
         services.AddSingleton<MonsterRepository>();
         services.AddSingleton<AbilityRepository>();
+        services.AddSingleton<ItemRepository>();
         services.AddSingleton<RoomRepository>();
         services.AddSingleton<PlayerService>();
         services.AddSingleton<MonsterService>();
