@@ -1,7 +1,8 @@
-﻿namespace ConsoleRpgEntities.Models.Rooms
+namespace ConsoleRpgEntities.Models.Rooms
 {
     public interface IRoom
     {
+        int Id { get; }
         string Name { get; }
         IRoom? East { get; set; }
         IRoom? North { get; set; }
