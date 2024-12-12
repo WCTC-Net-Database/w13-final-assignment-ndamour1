@@ -49,9 +49,27 @@ namespace ConsoleRpgEntities.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Damage")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Defense")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Distance")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Dodge")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("InUse")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("MonsterId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -59,7 +77,9 @@ namespace ConsoleRpgEntities.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Abilities", (string)null);
+                    b.HasIndex("MonsterId");
+
+                    b.ToTable("Abilities");
 
                     b.HasDiscriminator<string>("AbilityType").HasValue("Ability");
                 });
@@ -75,22 +95,41 @@ namespace ConsoleRpgEntities.Migrations
                     b.Property<int>("AggressionLevel")
                         .HasColumnType("int");
 
-                    b.Property<int>("Health")
+                    b.Property<string>("Class")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("EquipmentId")
                         .HasColumnType("int");
 
-                    b.Property<string>("MonsterType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Health")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Race")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("RoomId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Sneakiness")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Waaagh")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Monsters", (string)null);
+                    b.HasIndex("EquipmentId");
 
-                    b.HasDiscriminator<string>("MonsterType").HasValue("Monster");
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("Monsters");
+
+                    b.HasDiscriminator<string>("Race").HasValue("Monster");
                 });
 
             modelBuilder.Entity("ConsoleRpgEntities.Models.Characters.Player", b =>
@@ -101,6 +140,10 @@ namespace ConsoleRpgEntities.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("Class")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("EquipmentId")
                         .HasColumnType("int");
 
@@ -110,8 +153,14 @@ namespace ConsoleRpgEntities.Migrations
                     b.Property<int>("Health")
                         .HasColumnType("int");
 
+                    b.Property<int>("Modifier")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Race")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("RoomId")
@@ -123,7 +172,9 @@ namespace ConsoleRpgEntities.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("Players", (string)null);
+                    b.ToTable("Players");
+
+                    b.HasDiscriminator<string>("Class").HasValue("Uruk");
                 });
 
             modelBuilder.Entity("ConsoleRpgEntities.Models.Equipments.Equipment", b =>
@@ -146,7 +197,7 @@ namespace ConsoleRpgEntities.Migrations
 
                     b.HasIndex("WeaponId");
 
-                    b.ToTable("Equipments", (string)null);
+                    b.ToTable("Equipments");
                 });
 
             modelBuilder.Entity("ConsoleRpgEntities.Models.Equipments.Inventory", b =>
@@ -165,7 +216,7 @@ namespace ConsoleRpgEntities.Migrations
                     b.HasIndex("PlayerId")
                         .IsUnique();
 
-                    b.ToTable("Inventory", (string)null);
+                    b.ToTable("Inventory");
                 });
 
             modelBuilder.Entity("ConsoleRpgEntities.Models.Equipments.Item", b =>
@@ -203,7 +254,7 @@ namespace ConsoleRpgEntities.Migrations
 
                     b.HasIndex("InventoryId");
 
-                    b.ToTable("Items", (string)null);
+                    b.ToTable("Items");
                 });
 
             modelBuilder.Entity("ConsoleRpgEntities.Models.Rooms.Room", b =>
@@ -247,30 +298,259 @@ namespace ConsoleRpgEntities.Migrations
 
                     b.HasIndex("WestId");
 
-                    b.ToTable("Rooms", (string)null);
+                    b.ToTable("Rooms");
+                });
+
+            modelBuilder.Entity("ConsoleRpgEntities.Models.Abilities.PlayerAbilities.BiteAbility", b =>
+                {
+                    b.HasBaseType("ConsoleRpgEntities.Models.Abilities.PlayerAbilities.Ability");
+
+                    b.HasDiscriminator().HasValue("BiteAbility");
+                });
+
+            modelBuilder.Entity("ConsoleRpgEntities.Models.Abilities.PlayerAbilities.BubbleAbility", b =>
+                {
+                    b.HasBaseType("ConsoleRpgEntities.Models.Abilities.PlayerAbilities.Ability");
+
+                    b.HasDiscriminator().HasValue("BubbleAbility");
+                });
+
+            modelBuilder.Entity("ConsoleRpgEntities.Models.Abilities.PlayerAbilities.DrainAbility", b =>
+                {
+                    b.HasBaseType("ConsoleRpgEntities.Models.Abilities.PlayerAbilities.Ability");
+
+                    b.HasDiscriminator().HasValue("DrainAbility");
+                });
+
+            modelBuilder.Entity("ConsoleRpgEntities.Models.Abilities.PlayerAbilities.FireAbility", b =>
+                {
+                    b.HasBaseType("ConsoleRpgEntities.Models.Abilities.PlayerAbilities.Ability");
+
+                    b.HasDiscriminator().HasValue("FireAbility");
+                });
+
+            modelBuilder.Entity("ConsoleRpgEntities.Models.Abilities.PlayerAbilities.HealAbility", b =>
+                {
+                    b.HasBaseType("ConsoleRpgEntities.Models.Abilities.PlayerAbilities.Ability");
+
+                    b.HasDiscriminator().HasValue("HealAbility");
+                });
+
+            modelBuilder.Entity("ConsoleRpgEntities.Models.Abilities.PlayerAbilities.LightningAbility", b =>
+                {
+                    b.HasBaseType("ConsoleRpgEntities.Models.Abilities.PlayerAbilities.Ability");
+
+                    b.HasDiscriminator().HasValue("LightningAbility");
+                });
+
+            modelBuilder.Entity("ConsoleRpgEntities.Models.Abilities.PlayerAbilities.MistAbility", b =>
+                {
+                    b.HasBaseType("ConsoleRpgEntities.Models.Abilities.PlayerAbilities.Ability");
+
+                    b.HasDiscriminator().HasValue("MistAbility");
+                });
+
+            modelBuilder.Entity("ConsoleRpgEntities.Models.Abilities.PlayerAbilities.RageAbility", b =>
+                {
+                    b.HasBaseType("ConsoleRpgEntities.Models.Abilities.PlayerAbilities.Ability");
+
+                    b.HasDiscriminator().HasValue("RageAbility");
                 });
 
             modelBuilder.Entity("ConsoleRpgEntities.Models.Abilities.PlayerAbilities.ShoveAbility", b =>
                 {
                     b.HasBaseType("ConsoleRpgEntities.Models.Abilities.PlayerAbilities.Ability");
 
-                    b.Property<int>("Damage")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Distance")
-                        .HasColumnType("int");
-
                     b.HasDiscriminator().HasValue("ShoveAbility");
+                });
+
+            modelBuilder.Entity("ConsoleRpgEntities.Models.Characters.Artificer", b =>
+                {
+                    b.HasBaseType("ConsoleRpgEntities.Models.Characters.Player");
+
+                    b.HasDiscriminator().HasValue("Artificer");
+                });
+
+            modelBuilder.Entity("ConsoleRpgEntities.Models.Characters.Barbarian", b =>
+                {
+                    b.HasBaseType("ConsoleRpgEntities.Models.Characters.Player");
+
+                    b.HasDiscriminator().HasValue("Barbarian");
+                });
+
+            modelBuilder.Entity("ConsoleRpgEntities.Models.Characters.Bard", b =>
+                {
+                    b.HasBaseType("ConsoleRpgEntities.Models.Characters.Player");
+
+                    b.HasDiscriminator().HasValue("Bard");
+                });
+
+            modelBuilder.Entity("ConsoleRpgEntities.Models.Characters.Cleric", b =>
+                {
+                    b.HasBaseType("ConsoleRpgEntities.Models.Characters.Player");
+
+                    b.HasDiscriminator().HasValue("Cleric");
+                });
+
+            modelBuilder.Entity("ConsoleRpgEntities.Models.Characters.Druid", b =>
+                {
+                    b.HasBaseType("ConsoleRpgEntities.Models.Characters.Player");
+
+                    b.HasDiscriminator().HasValue("Druid");
+                });
+
+            modelBuilder.Entity("ConsoleRpgEntities.Models.Characters.Fighter", b =>
+                {
+                    b.HasBaseType("ConsoleRpgEntities.Models.Characters.Player");
+
+                    b.HasDiscriminator().HasValue("Fighter");
+                });
+
+            modelBuilder.Entity("ConsoleRpgEntities.Models.Characters.Monk", b =>
+                {
+                    b.HasBaseType("ConsoleRpgEntities.Models.Characters.Player");
+
+                    b.HasDiscriminator().HasValue("Monk");
+                });
+
+            modelBuilder.Entity("ConsoleRpgEntities.Models.Characters.Monsters.Balrog", b =>
+                {
+                    b.HasBaseType("ConsoleRpgEntities.Models.Characters.Monsters.Monster");
+
+                    b.HasDiscriminator().HasValue("Balrog");
+                });
+
+            modelBuilder.Entity("ConsoleRpgEntities.Models.Characters.Monsters.Fallen", b =>
+                {
+                    b.HasBaseType("ConsoleRpgEntities.Models.Characters.Monsters.Monster");
+
+                    b.HasDiscriminator().HasValue("Fallen");
+                });
+
+            modelBuilder.Entity("ConsoleRpgEntities.Models.Characters.Monsters.Ghoul", b =>
+                {
+                    b.HasBaseType("ConsoleRpgEntities.Models.Characters.Monsters.Monster");
+
+                    b.HasDiscriminator().HasValue("Ghoul");
                 });
 
             modelBuilder.Entity("ConsoleRpgEntities.Models.Characters.Monsters.Goblin", b =>
                 {
                     b.HasBaseType("ConsoleRpgEntities.Models.Characters.Monsters.Monster");
 
-                    b.Property<int>("Sneakiness")
-                        .HasColumnType("int");
-
                     b.HasDiscriminator().HasValue("Goblin");
+                });
+
+            modelBuilder.Entity("ConsoleRpgEntities.Models.Characters.Monsters.Kumiho", b =>
+                {
+                    b.HasBaseType("ConsoleRpgEntities.Models.Characters.Monsters.Monster");
+
+                    b.HasDiscriminator().HasValue("Kumiho");
+                });
+
+            modelBuilder.Entity("ConsoleRpgEntities.Models.Characters.Monsters.Ogre", b =>
+                {
+                    b.HasBaseType("ConsoleRpgEntities.Models.Characters.Monsters.Monster");
+
+                    b.HasDiscriminator().HasValue("Ogre");
+                });
+
+            modelBuilder.Entity("ConsoleRpgEntities.Models.Characters.Monsters.Oni", b =>
+                {
+                    b.HasBaseType("ConsoleRpgEntities.Models.Characters.Monsters.Monster");
+
+                    b.HasDiscriminator().HasValue("Oni");
+                });
+
+            modelBuilder.Entity("ConsoleRpgEntities.Models.Characters.Monsters.Orrok", b =>
+                {
+                    b.HasBaseType("ConsoleRpgEntities.Models.Characters.Monsters.Monster");
+
+                    b.HasDiscriminator().HasValue("Orrok");
+                });
+
+            modelBuilder.Entity("ConsoleRpgEntities.Models.Characters.Monsters.Rakshasa", b =>
+                {
+                    b.HasBaseType("ConsoleRpgEntities.Models.Characters.Monsters.Monster");
+
+                    b.HasDiscriminator().HasValue("Rakshasa");
+                });
+
+            modelBuilder.Entity("ConsoleRpgEntities.Models.Characters.Monsters.Troll", b =>
+                {
+                    b.HasBaseType("ConsoleRpgEntities.Models.Characters.Monsters.Monster");
+
+                    b.HasDiscriminator().HasValue("Troll");
+                });
+
+            modelBuilder.Entity("ConsoleRpgEntities.Models.Characters.Monsters.Uruk", b =>
+                {
+                    b.HasBaseType("ConsoleRpgEntities.Models.Characters.Monsters.Monster");
+
+                    b.HasDiscriminator().HasValue("Uruk");
+                });
+
+            modelBuilder.Entity("ConsoleRpgEntities.Models.Characters.Paladin", b =>
+                {
+                    b.HasBaseType("ConsoleRpgEntities.Models.Characters.Player");
+
+                    b.HasDiscriminator().HasValue("Paladin");
+                });
+
+            modelBuilder.Entity("ConsoleRpgEntities.Models.Characters.Ranger", b =>
+                {
+                    b.HasBaseType("ConsoleRpgEntities.Models.Characters.Player");
+
+                    b.HasDiscriminator().HasValue("Ranger");
+                });
+
+            modelBuilder.Entity("ConsoleRpgEntities.Models.Characters.Revenant", b =>
+                {
+                    b.HasBaseType("ConsoleRpgEntities.Models.Characters.Player");
+
+                    b.HasDiscriminator().HasValue("Revenant");
+                });
+
+            modelBuilder.Entity("ConsoleRpgEntities.Models.Characters.Rogue", b =>
+                {
+                    b.HasBaseType("ConsoleRpgEntities.Models.Characters.Player");
+
+                    b.HasDiscriminator().HasValue("Rogue");
+                });
+
+            modelBuilder.Entity("ConsoleRpgEntities.Models.Characters.Sorcerer", b =>
+                {
+                    b.HasBaseType("ConsoleRpgEntities.Models.Characters.Player");
+
+                    b.HasDiscriminator().HasValue("Sorcerer");
+                });
+
+            modelBuilder.Entity("ConsoleRpgEntities.Models.Characters.Therianthrope", b =>
+                {
+                    b.HasBaseType("ConsoleRpgEntities.Models.Characters.Player");
+
+                    b.HasDiscriminator().HasValue("Therianthrope");
+                });
+
+            modelBuilder.Entity("ConsoleRpgEntities.Models.Characters.Vampire", b =>
+                {
+                    b.HasBaseType("ConsoleRpgEntities.Models.Characters.Player");
+
+                    b.HasDiscriminator().HasValue("Vampire");
+                });
+
+            modelBuilder.Entity("ConsoleRpgEntities.Models.Characters.Warlock", b =>
+                {
+                    b.HasBaseType("ConsoleRpgEntities.Models.Characters.Player");
+
+                    b.HasDiscriminator().HasValue("Warlock");
+                });
+
+            modelBuilder.Entity("ConsoleRpgEntities.Models.Characters.Wizard", b =>
+                {
+                    b.HasBaseType("ConsoleRpgEntities.Models.Characters.Player");
+
+                    b.HasDiscriminator().HasValue("Wizard");
                 });
 
             modelBuilder.Entity("AbilityPlayer", b =>
@@ -286,6 +566,28 @@ namespace ConsoleRpgEntities.Migrations
                         .HasForeignKey("PlayersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ConsoleRpgEntities.Models.Abilities.PlayerAbilities.Ability", b =>
+                {
+                    b.HasOne("ConsoleRpgEntities.Models.Characters.Monsters.Monster", null)
+                        .WithMany("Abilities")
+                        .HasForeignKey("MonsterId");
+                });
+
+            modelBuilder.Entity("ConsoleRpgEntities.Models.Characters.Monsters.Monster", b =>
+                {
+                    b.HasOne("ConsoleRpgEntities.Models.Equipments.Equipment", "Equipment")
+                        .WithMany()
+                        .HasForeignKey("EquipmentId");
+
+                    b.HasOne("ConsoleRpgEntities.Models.Rooms.Room", "Room")
+                        .WithMany("Monsters")
+                        .HasForeignKey("RoomId");
+
+                    b.Navigation("Equipment");
+
+                    b.Navigation("Room");
                 });
 
             modelBuilder.Entity("ConsoleRpgEntities.Models.Characters.Player", b =>
@@ -363,6 +665,11 @@ namespace ConsoleRpgEntities.Migrations
                     b.Navigation("West");
                 });
 
+            modelBuilder.Entity("ConsoleRpgEntities.Models.Characters.Monsters.Monster", b =>
+                {
+                    b.Navigation("Abilities");
+                });
+
             modelBuilder.Entity("ConsoleRpgEntities.Models.Characters.Player", b =>
                 {
                     b.Navigation("Inventory")
@@ -376,6 +683,8 @@ namespace ConsoleRpgEntities.Migrations
 
             modelBuilder.Entity("ConsoleRpgEntities.Models.Rooms.Room", b =>
                 {
+                    b.Navigation("Monsters");
+
                     b.Navigation("Players");
                 });
 #pragma warning restore 612, 618
