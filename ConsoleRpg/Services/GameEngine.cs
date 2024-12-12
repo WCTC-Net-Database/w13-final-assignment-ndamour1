@@ -628,6 +628,7 @@ public class GameEngine
                         };
                     }
                     _playerRepository.UpdatePlayer(_player);
+                    _player.Room.PlayerId = _player.Id;
                     _roomRepository.UpdateRoom(_player.Room);
                     _assetCreationService.AbilityCreationLoop(_player);
                     break;
