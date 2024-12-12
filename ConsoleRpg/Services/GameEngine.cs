@@ -932,10 +932,10 @@ public class GameEngine
                             }
                             break;
                         case 4:
-                            characters = _context.Players.OrderByDescending(e => e.Experience).OrderBy(n => n.Name).ToList();
+                            characters = _context.Players.OrderByDescending(e => e.Experience).ToList();
                             break;
                         case 5:
-                            characters = _context.Players.OrderByDescending(h => h.Health).OrderBy(n => n.Name).ToList();
+                            characters = _context.Players.OrderByDescending(h => h.Health).ToList();
                             break;
                         default:
                             _outputManager.AddLogEntry("Invalid selection. Please choose between 0 and 6.");
