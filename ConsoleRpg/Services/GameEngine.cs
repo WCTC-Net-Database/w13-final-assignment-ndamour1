@@ -561,7 +561,7 @@ public class GameEngine
 
         while (true)
         {
-            _outputManager.AddLogEntry("Would you like to select, create, or edit a character? If not, input 5 if you want to consult your guide, or 6 to play.");
+            _outputManager.AddLogEntry("Would you like to select, create, or edit a character or create a room? If not, input 5 if you want to consult your guide, or 6 to play.");
             _outputManager.AddLogEntry("1. Select Character");
             _outputManager.AddLogEntry("2. Create Character");
             _outputManager.AddLogEntry("3. Edit Character");
