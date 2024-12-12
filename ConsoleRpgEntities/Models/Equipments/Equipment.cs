@@ -28,5 +28,6 @@ public class Equipment
         {
             Armor = item;
         }
+        Console.WriteLine($"You have equipped the {item.Name}.");
     }
 }
