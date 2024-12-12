@@ -1940,7 +1940,9 @@ namespace ConsoleRpg.Services
             List<Room> openEastRooms = _context.Rooms.Where(e => e.East == null).ToList();
             List<Room> openWestRooms = _context.Rooms.Where(w => w.West == null).ToList();
             List<Player> players = _context.Players.ToList();
+            List<Monster> monsters = _context.Monsters.ToList();
             List<Player> sameNamePlayers = new List<Player>();
+            Random rand = new Random();
             bool complete = false;
             bool roomComplete = false;
             int southRoomNumber = 0;
@@ -2084,6 +2086,7 @@ namespace ConsoleRpg.Services
                         else if (openSouthRooms.Count == 1)
                         {
                             _outputManager.AddLogEntry($"{name} is south of {openSouthRooms.ElementAt(0).Name}.");
+                            north = openSouthRooms.ElementAt(0);
                         }
                         else if (openSouthRooms.Count == 0)
                         {
@@ -2147,6 +2150,7 @@ namespace ConsoleRpg.Services
                         else if (openNorthRooms.Count == 1)
                         {
                             _outputManager.AddLogEntry($"{name} is north of {openNorthRooms.ElementAt(0).Name}.");
+                            south = openNorthRooms.ElementAt(0);
                         }
                         else if (openNorthRooms.Count == 0)
                         {
@@ -2184,14 +2188,14 @@ namespace ConsoleRpg.Services
                                     _outputManager.AddLogEntry("Choose which room your room is west of.\nInput 0 if there isn't a room.");
                                     westRoomNumber = Convert.ToInt32(_outputManager.GetUserInput("Selection:"));
 
-                                    if (eastRoomNumber < 0 || eastRoomNumber > openWestRooms.Count)
+                                    if (westRoomNumber < 0 || westRoomNumber > openWestRooms.Count)
                                     {
                                         _outputManager.AddLogEntry($"Invalid selection. Please choose between 0 and {openWestRooms.Count + 1}.");
                                     }
-                                    else if (eastRoomNumber == 0)
+                                    else if (westRoomNumber == 0)
                                     {
                                         _outputManager.AddLogEntry($"{name} does not connect west to another room.");
-                                        south = null;
+                                        east = null;
                                         break;
                                     }
                                     else if (westRoomNumber > 0 && westRoomNumber <= openWestRooms.Count)
@@ -2210,6 +2214,7 @@ namespace ConsoleRpg.Services
                         else if (openWestRooms.Count == 1)
                         {
                             _outputManager.AddLogEntry($"{name} is west of {openWestRooms.ElementAt(0).Name}.");
+                            east = openWestRooms.ElementAt(0);
                         }
                         else if (openWestRooms.Count == 0)
                         {
@@ -2245,16 +2250,16 @@ namespace ConsoleRpg.Services
                                     }
 
                                     _outputManager.AddLogEntry("Choose which room your room is east of.\nInput 0 if there isn't a room.");
-                                    westRoomNumber = Convert.ToInt32(_outputManager.GetUserInput("Selection:"));
+                                    eastRoomNumber = Convert.ToInt32(_outputManager.GetUserInput("Selection:"));
 
-                                    if (westRoomNumber < 0 || westRoomNumber > openEastRooms.Count)
+                                    if (eastRoomNumber < 0 || eastRoomNumber > openEastRooms.Count)
                                     {
                                         _outputManager.AddLogEntry($"Invalid selection. Please choose between 0 and {openEastRooms.Count + 1}.");
                                     }
-                                    else if (westRoomNumber == 0)
+                                    else if (eastRoomNumber == 0)
                                     {
                                         _outputManager.AddLogEntry($"{name} does not connect east to another room.");
-                                        south = null;
+                                        west = null;
                                         break;
                                     }
                                     else if (eastRoomNumber > 0 && eastRoomNumber <= openEastRooms.Count)
@@ -2273,6 +2278,7 @@ namespace ConsoleRpg.Services
                         else if (openEastRooms.Count == 1)
                         {
                             _outputManager.AddLogEntry($"{name} is east of {openEastRooms.ElementAt(0).Name}.");
+                            west = openEastRooms.ElementAt(0);
                         }
                         else if (openEastRooms.Count == 0)
                         {
@@ -2640,7 +2646,14 @@ namespace ConsoleRpg.Services
                                 room.South = south;
                                 room.East = east;
                                 room.West = west;
-                                room.Players = roomPlayers.ToList();
+                                if (roomPlayers.Count > 0)
+                                {
+                                    room.Players = roomPlayers.ToList();
+                                }
+                                else
+                                {
+                                    room.Players = new List<Player>();
+                                }
                                 room.Monsters = new List<Monster>();
                                 roomComplete = true;
                                 break;
