@@ -45,7 +45,7 @@ namespace ConsoleRpg.Services
                     _outputManager.AddLogEntry("Type the name of the item you want to find.");
                     var input = _outputManager.GetUserInput("Name:");
 
-                    if (input.Equals("") || input == null)
+                    if (input.IsNullOrEmpty())
                     {
                         _outputManager.AddLogEntry("You must name the item to continue.");
                     }
@@ -257,7 +257,7 @@ namespace ConsoleRpg.Services
                         _outputManager.AddLogEntry("Type in the name of the race of the character(s) you want.");
                         string race = _outputManager.GetUserInput("Race:");
 
-                        if (race.Equals("") || race == null)
+                        if (race.IsNullOrEmpty())
                         {
                             _outputManager.AddLogEntry($"You must input the name of the race you want to continue.");
                         }
@@ -292,7 +292,7 @@ namespace ConsoleRpg.Services
                         _outputManager.AddLogEntry("Type in the name of the race of the character(s) you want.");
                         string race = _outputManager.GetUserInput("Race:");
 
-                        if (race.Equals("") || race == null)
+                        if (race.IsNullOrEmpty())
                         {
                             _outputManager.AddLogEntry($"You must input the name of the race you want to continue.");
                         }
@@ -697,7 +697,7 @@ namespace ConsoleRpg.Services
                         _outputManager.AddLogEntry("Type in the name of the class you\'re the character(s) you want belong to.");
                         string characterClass = _outputManager.GetUserInput("Class:").ToString();
 
-                        if (characterClass.Equals("") || characterClass == null)
+                        if (characterClass.IsNullOrEmpty())
                         {
                             _outputManager.AddLogEntry("You must input the character's class in order to continue.");
                         }
