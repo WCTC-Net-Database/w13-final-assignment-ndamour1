@@ -1486,6 +1486,11 @@ namespace ConsoleRpg.Services
 
                 if (complete)
                 {
+                    for (int i = 0; i < players.Count; ++i)
+                    {
+                        players.ElementAt(i).Id = i + 1;
+                        _playerRepository.UpdatePlayer(players.ElementAt(i));
+                    }
                     break;
                 }
             }
