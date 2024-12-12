@@ -312,7 +312,7 @@ public class GameEngine
                     {
                         try
                         {
-                            _outputManager.AddLogEntry($"Describe the ability you want to use.\nRemember to get the description right.");
+                            _outputManager.AddLogEntry($"Describe the ability you want to use.");
                             string description = _outputManager.GetUserInput("Description:");
                             sameNameAbilities = abilities.Where(n => n.Description.Equals(description)).ToList();
 
