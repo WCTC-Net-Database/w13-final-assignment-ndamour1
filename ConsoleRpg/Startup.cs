@@ -2,6 +2,7 @@
 using ConsoleRpg.Services;
 using ConsoleRpgEntities.Data;
 using ConsoleRpgEntities.Helpers;
+using ConsoleRpgEntities.Repository;
 using ConsoleRpgEntities.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -48,8 +49,17 @@ public static class Startup
         services.AddTransient<MenuManager>();
         services.AddTransient<MapManager>();
         services.AddSingleton<OutputManager>();
+        services.AddSingleton<GameGuide>();
+        services.AddSingleton<PlayerRepository>();
+        services.AddSingleton<MonsterRepository>();
+        services.AddSingleton<AbilityRepository>();
+        services.AddSingleton<RoomRepository>();
         services.AddSingleton<PlayerService>();
+        services.AddSingleton<MonsterService>();
+        services.AddSingleton<InventoryService>();
         services.AddSingleton<AbilityService>();
+        services.AddSingleton<SearchService>();
+        services.AddSingleton<AssetCreationService>();
         services.AddSingleton<IOutputService, OutputService>();
     }
 }
