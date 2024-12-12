@@ -3,7 +3,7 @@ using ConsoleRpgEntities.Models.Attributes;
 using ConsoleRpgEntities.Models.Characters;
 using ConsoleRpgEntities.Models.Equipments;
 using ConsoleRpgEntities.Models.Rooms;
-using ConsoleRpgEntities.Repsitory;
+using ConsoleRpgEntities.Repository;
 using ConsoleRpgEntities.Services;
 
 public class PlayerService
