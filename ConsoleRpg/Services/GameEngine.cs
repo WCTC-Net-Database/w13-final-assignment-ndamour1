@@ -1523,7 +1523,6 @@ public class GameEngine
 
                 if (found && !input.IsNullOrEmpty())
                 {
-                    _outputManager.AddLogEntry($"You have equipped the {input}.");
                     _playerService.EquipItemFromInventory(player, chosen);
                     break;
                 }
