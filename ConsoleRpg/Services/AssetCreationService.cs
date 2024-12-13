@@ -938,7 +938,7 @@ namespace ConsoleRpg.Services
                             if (abilityInput == 9)
                             {
                                 _outputManager.AddLogEntry($"     Name: {abilityName}");
-                                _outputManager.AddLogEntry($"     Description {description}");
+                                _outputManager.AddLogEntry($"     Description: {description}");
                                 _outputManager.AddLogEntry($"     Ability Type: {abilityType}");
                                 _outputManager.AddLogEntry($"     Damage: {damage}");
                                 _outputManager.AddLogEntry($"     Defense: {defense}");
@@ -947,7 +947,7 @@ namespace ConsoleRpg.Services
                             else
                             {
                                 _outputManager.AddLogEntry($"     Name: {abilityName}");
-                                _outputManager.AddLogEntry($"     Description {description}");
+                                _outputManager.AddLogEntry($"     Description: {description}");
                                 _outputManager.AddLogEntry($"     Ability Type: {abilityType}");
                                 _outputManager.AddLogEntry($"     Damage: {damage}");
                                 _outputManager.AddLogEntry($"     Defense: {defense}");
@@ -1866,7 +1866,7 @@ namespace ConsoleRpg.Services
                         if (typeInput == 9)
                         {
                             _outputManager.AddLogEntry($"     Name: {name}");
-                            _outputManager.AddLogEntry($"     Description {description}");
+                            _outputManager.AddLogEntry($"     Description: {description}");
                             _outputManager.AddLogEntry($"     Ability Type: {abilityType}");
                             _outputManager.AddLogEntry($"     Damage: {damage}");
                             _outputManager.AddLogEntry($"     Defense: {defense}");
@@ -1875,7 +1875,7 @@ namespace ConsoleRpg.Services
                         else
                         {
                             _outputManager.AddLogEntry($"     Name: {name}");
-                            _outputManager.AddLogEntry($"     Description {description}");
+                            _outputManager.AddLogEntry($"     Description: {description}");
                             _outputManager.AddLogEntry($"     Ability Type: {abilityType}");
                             _outputManager.AddLogEntry($"     Damage: {damage}");
                             _outputManager.AddLogEntry($"     Defense: {defense}");
