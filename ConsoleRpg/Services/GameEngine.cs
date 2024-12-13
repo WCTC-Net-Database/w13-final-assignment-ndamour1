@@ -304,7 +304,7 @@ public class GameEngine
                 }
             }
 
-            if (target is ITargetable targetableEnemy)
+            if (target is ITargetable targetableEnemy && targetableEnemy is Monster targetableMonster)
             {
                 _playerService.Attack(_player, targetableEnemy);
 
